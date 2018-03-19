@@ -30,3 +30,23 @@ $ (open another two terminals) node client1.js && node client2.js
 ![ScreenShot-2](https://github.com/madguy02/RocketNode/blob/develop/screenshot-2.png)
 ![ScreenShot-3](https://github.com/madguy02/RocketNode/blob/develop/screenshot-3.png)
 
+
+### Future Roadmap
+
+[] Build a better Client.
+[] The UI or the particular channel to which the message is intended has to be updated.
+[] Replace the locally created logs with something more durable and fault tolerant (Looking at Kafka).
+[] Add some UI to the Client.
+[] Make the Server send the requests and route them properly (Ongoing Experiment).
+[] Add Encryption, to avoid EavesDropping (TBD).
+
+
+### Next immediate Step
+
+[] Integrate Hubot to update messages to the intended channel
+
+### Note:
+
+Developers are welcome to support this experimentation project, figure out the weaknesses and provide solutions for it.
+Contributions are required from all those Talented Developers in the world and make something awesome together :)
+
