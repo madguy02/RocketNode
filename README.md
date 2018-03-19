@@ -26,7 +26,7 @@ $ (open another two terminals) node client1.js && node client2.js
 
 ### ScreenShots
 
-![ScreenShot-1](/home/madguy02/Documents/RocketNode/screenshot-1)
-![ScreenShot-2](/home/madguy02/Documents/RocketNode/screenshot-2)
-![ScreenShot-3](/home/madguy02/Documents/RocketNode/screenshot-3)
+![ScreenShot-1](https://github.com/madguy02/RocketNode/blob/develop/screenshot-1.png)
+![ScreenShot-2](https://github.com/madguy02/RocketNode/blob/develop/screenshot-2.png)
+![ScreenShot-3](https://github.com/madguy02/RocketNode/blob/develop/screenshot-3.png)
 
