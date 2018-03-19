@@ -33,17 +33,17 @@ $ (open another two terminals) node client1.js && node client2.js
 
 ### Future Roadmap
 
-[] Build a better Client.
-[] The UI or the particular channel to which the message is intended has to be updated.
-[] Replace the locally created logs with something more durable and fault tolerant (Looking at Kafka).
-[] Add some UI to the Client.
-[] Make the Server send the requests and route them properly (Ongoing Experiment).
-[] Add Encryption, to avoid EavesDropping (TBD).
+[ ] Build a better Client.
+[ ] The UI or the particular channel to which the message is intended has to be updated.
+[ ] Replace the locally created logs with something more durable and fault tolerant (Looking at Kafka).
+[ ] Add some UI to the Client.
+[ ] Make the Server send the requests and route them properly (Ongoing Experiment).
+[ ] Add Encryption, to avoid EavesDropping (TBD).
 
 
 ### Next immediate Step
 
-[] Integrate Hubot to update messages to the intended channel
+[ ] Integrate Hubot to update messages to the intended channel
 
 ### Note:
 
