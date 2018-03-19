@@ -45,6 +45,18 @@ $ (open another two terminals) node client1.js && node client2.js
 
 - [ ] Integrate Hubot to update messages to the intended channel
 
+
+### Weaknesses
+
+- Leaky Buffers
+- Fault intolerant
+- Not Robust at all
+- The client depends on the connection to the server
+
+### Thoughts on ZeroMQ
+
+The idea of implementing  ZeroMQ is still undecided, although according to tests, i think its good enough to solve a few of the problems or weaknesses mentioned above ( But its still TBD)
+
 ### Note:
 
 Developers are welcome to support this experimentation project, figure out the weaknesses and provide solutions for it.
