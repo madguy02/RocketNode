@@ -26,9 +26,12 @@ $ (open another two terminals) node client1.js && node client2.js
 
 ### ScreenShots
 
-![ScreenShot-1](https://github.com/madguy02/RocketNode/blob/develop/screenshot-1.png)
-![ScreenShot-2](https://github.com/madguy02/RocketNode/blob/develop/screenshot-2.png)
-![ScreenShot-3](https://github.com/madguy02/RocketNode/blob/develop/screenshot-3.png)
+![ScreenShot-1](https://github.com/madguy02/RocketNode/blob/develop/Screenshot-server-starts-1.png)
+![ScreenShot-2](https://github.com/madguy02/RocketNode/blob/develop/Screenshot-server2-starts.png)
+![ScreenShot-3](https://github.com/madguy02/RocketNode/blob/develop/Screenshot-client1-send-message.png)
+![ScreenShot-4](https://github.com/madguy02/RocketNode/blob/develop/Screenshot-client2-send-message.png)
+![ScreenShot-5](https://github.com/madguy02/RocketNode/blob/develop/Screenshot-client1.png)
+
 
 
 ### Future Roadmap
@@ -39,11 +42,21 @@ $ (open another two terminals) node client1.js && node client2.js
 - [ ] Add some UI to the Client.
 - [ ] Make the Server send the requests and route them properly (Ongoing Experiment).
 - [ ] Add Encryption, to avoid EavesDropping (TBD).
+- [ ] Moving with olm, implemented by matrix (TBD).
+
 
 
 ### Next immediate Step
 
-- [ ] Integrate Hubot to update messages to the intended channel
+- [ ] Join a Room from Server1 to Server2
+- [ ] UI work on Rocket.Chat platform, for federation messages to display.
+- [ ] Structuring of JSON messages.
+
+
+### Instruction
+
+If you are willing to implement on instances other than localhosts, you will need to have a static IP address for the
+other server to find that instance.
 
 
 ### Weaknesses
