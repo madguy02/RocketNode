@@ -31,6 +31,7 @@ $ (open another two terminals) node client1.js && node client2.js
 ![ScreenShot-3](https://github.com/madguy02/RocketNode/blob/develop/Screenshot-client1-send-message.png)
 ![ScreenShot-4](https://github.com/madguy02/RocketNode/blob/develop/Screenshot-client2-send-message.png)
 ![ScreenShot-5](https://github.com/madguy02/RocketNode/blob/develop/Screenshot-client1.png)
+![ScreenShot-6](https://github.com/madguy02/RocketNode/blob/develop/Screenshot-federation-msg.png)
 
 
 
