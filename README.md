@@ -53,6 +53,7 @@ $ change the tcp port on the federationclient package and rocketnode.
 - [ ] UI work on Rocket.Chat platform, for federation messages to display.
 - [ ] Structuring of JSON messages.
 - [ ] RocketNode automatically query connected server information.
+- [ ] Implementation of Concensus to rocketnode and RC server.
 
 
 ### Instruction
