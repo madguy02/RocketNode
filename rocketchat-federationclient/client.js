@@ -2,18 +2,20 @@ var net = require('net');
 var fs = require('fs');
 var http = require('http');
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:3001/meteor";
+var url = "mongodb://localhost:8182/meteor";
 
 var server = net.createServer( Meteor.bindEnvironment( function ( socket ) {
 //socket.write("Hi welcome to federation");
   socket.addListener( "data", Meteor.bindEnvironment( function ( data ) {
 	var val = data.toString('utf8').replace("PUT /channel/general HTTP/1.1","").replace("Content-Type: application/json","")
-			.replace("Content-Length: 40","").replace("Host: localhost:6001","").replace("Connection: close","")
+			.replace(/^[0-9]*$/gm,"").replace("Transfer-Encoding: chunked","").replace("Host: localhost:5001","").replace("Connection: close","").replace("Host:localhost:01","").replace("1f","")
 			.replace(" ","");
 	//var doc = JSON.parse(val);
 	console.log(val);
 	//socket.pipe(data);
-	var content = fs.appendFileSync('/home/madguy02/Desktop/rclog.txt', val);
+	var writerStream = fs.createWriteStream('/home/madguy02/Desktop/rclog.txt');
+	writerStream.write(val,'UTF8');
+	//var content = fs.appendFileSync('', val);
 	MongoClient.connect(url, function(err, db) {
   	if (err) throw err;
   	var dbo = db.db("meteor");
@@ -30,4 +32,4 @@ var server = net.createServer( Meteor.bindEnvironment( function ( socket ) {
     //var content = fs.writeFileSync('/home/madguy02/Desktop/rclog.txt', doc.msg);
 
   } ) )
-} ) ).listen(6001);
+} ) ).listen(5001);

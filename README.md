@@ -17,10 +17,10 @@ The very name 'RocketNode' comes from the idea of having extra client nodes, whi
 ### Installation & Running
 
 ```sh
-$ meteor add rocketchat:federationclient1 (For one Rocket.Chat instance)
-$ meteor add rocketchat:federationclient2 (For another Rocket.Chat)
-$ meteor npm start or meteor run  --port 8181 (run two instances simultaneously)
-$ (open another two terminals) node client1.js && node client2.js
+$ meteor add rocketchat:federationclient (for instances trying to be federated)
+$ start rocketnode.js separately for servers(trying to federate)
+$ change the tcp port on the federationclient package and rocketnode.
+
 ```
 
 
@@ -52,6 +52,7 @@ $ (open another two terminals) node client1.js && node client2.js
 - [ ] Join a Room from Server1 to Server2
 - [ ] UI work on Rocket.Chat platform, for federation messages to display.
 - [ ] Structuring of JSON messages.
+- [ ] RocketNode automatically query connected server information.
 
 
 ### Instruction
