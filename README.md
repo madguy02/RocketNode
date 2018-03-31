@@ -25,6 +25,7 @@ $ change the tcp port on the federationclient package and rocketnode.
 
 
 ### ScreenShots
+![ScreenShot--1](https://github.com/madguy02/RocketNode/blob/develop/Architecture-itr-2.PNG)
 ![ScreenShot-0](https://github.com/madguy02/RocketNode/blob/develop/Architecture.PNG)
 ![ScreenShot-1](https://github.com/madguy02/RocketNode/blob/develop/Screenshot-server-starts-1.png)
 ![ScreenShot-2](https://github.com/madguy02/RocketNode/blob/develop/Screenshot-server2-starts.png)
