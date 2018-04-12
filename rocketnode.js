@@ -2,27 +2,53 @@ var net = require('net');
 var http = require('http');
 var fs = require('fs');
 var stdin = process.openStdin();
+var topology = require('fully-connected-topology');
+var jsonStream = require('duplex-json-stream');
+var data = '';
+var streamSet = require('stream-set');
+var me = process.argv[2];
+var peers = process.argv.slice(3);
+var swarm = topology(me,peers);
+var streams = streamSet();
 
-var data = ' ';
+
+
 var client = new net.Socket();
-client.connect(5001, '127.0.0.1', function() {
+client.connect(6001, '127.0.0.1', function() {
 console.log('connected');
 
-fs.watchFile('/home/madguy02/Desktop/rclog.txt', function() {
-console.log('updating messages....');
-var file = fs.readFileSync('/home/madguy02/Desktop/rclog.txt');
-console.log('Message Received: '+ 'at: '+new Date() + file);
+//fs.watchFile('/home/madguy02/Desktop/rclog.txt', function() {
+//console.log('updating messages....');
+//var file = fs.readFileSync('/home/madguy02/Desktop/rclog1.txt');
+//console.log('Message Received: '+ 'at: '+new Date() + file);
 
-});
+//});
+
+swarm.on('connection', function(socket) {
+  console.log(peers+'[a peer joined]');
+  socket = jsonStream(socket);
+  streams.add(socket);
+  socket.on('data',function(data){
+
+    console.log('cbnbo' + '>' + data.message);
+  })
+})
+//process.stdin.on('data',function(socket){
+
+//});
 
 stdin.addListener("data", function(d) {
-    console.log("you entered:"  +d.toString("utf8"));
-  
+streams.forEach(function(socket) {
+socket.write({username: me, message: d.toString().trim()})
+});
 
-var bodyString = d;
-console.log("You: "+bodyString);
+console.log("you entered:"  +d.toString("utf8"));
+var bodyString = JSON.stringify({username: me, message: d.toString().trim()}) ;
+console.log("You:"+bodyString);
+
+
 var headers = {
-   'Content-Type': 'application/json'
+    'Content-Type': 'application/json'
 };
 
 var options = {
@@ -52,23 +78,25 @@ response.removeHeader('Connection');
 
 http.request(options, callback).write(bodyString);
 
-//var content = fs.readFileSync('/home/madguy02/Desktop/rclog.txt');
-//console.log("Him:  "+ content.toString('utf8'));
-});
+
 });
 
+});
 //setTimeout(function(){
-//var readerStream = fs.createReadStream('/home/madguy02/Desktop/rclog.txt');
+//fs.readFile('/home/madguy02/Desktop/rclog1.txt','utf-8',function(err,content){
+//console.log(content);
+//});
+//var readerStream = fs.createReadStream('/home/madguy02/Desktop/rclog1.txt');
 //readerStream.setEncoding('utf8');
 //readerStream.on('data', function(chunk) {
    //data += chunk;
-//console.log("Received: "+ data);
 //});
-//},5000);
+//console.log(data);
+//},2000);
 
+//});
 
 client.on('data', function(data) {
-//client.write(data);
 console.log(data.toString('utf8'));
 //console.log(JSON.parse(data).name);
 //console.log(JSON.parse(data).serverName);
@@ -77,5 +105,3 @@ console.log(data.toString('utf8'));
 //client.write('{"name": "manish", "age": "934", "channel": "general", "serverName": "myServer", "msg": "Say hello"}');
 
 });
-
-
