@@ -55,8 +55,7 @@ $ change the tcp port on the federationclient package and rocketnode.
 - [ ] Structuring of JSON messages.
 - [ ] RocketNode automatically query connected server information.
 - [ ] Implementation of Concensus to rocketnode and RC server.
-
-
+- [x] Implementation of a peer to peer network between rocketnodes.
 ### Instruction
 
 If you are willing to implement on instances other than localhosts, you will need to have a static IP address for the
