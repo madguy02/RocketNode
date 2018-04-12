@@ -52,7 +52,7 @@ $ change the tcp port on the federationclient package and rocketnode.
 
 - [ ] Join a Room from Server1 to Server2
 - [ ] UI work on Rocket.Chat platform, for federation messages to display.
-- [ ] Structuring of JSON messages.
+- [x] Structuring of JSON messages.
 - [ ] RocketNode automatically query connected server information.
 - [ ] Implementation of Concensus to rocketnode and RC server.
 - [x] Implementation of a peer to peer network between rocketnodes.
