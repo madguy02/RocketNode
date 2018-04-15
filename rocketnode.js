@@ -10,6 +10,8 @@ var me = process.argv[2];
 var peers = process.argv.slice(3);
 var swarm = topology(me,peers);
 var streams = streamSet();
+var request = require('request');
+var express = require('express');
 
 
 
@@ -30,16 +32,124 @@ swarm.on('connection', function(socket) {
   streams.add(socket);
   socket.on('data',function(data){
 
-    console.log('cbnbo' + '>' + data.message);
+	var params = {
+	host: 'localhost',
+	port: 8181,
+	path: '/api/v1/users.register',
+	method: 'POST'
+
+};
+var jsondata;
+var parsedjsondata;
+var userId;
+var token;
+var req = http.request(params, function(res) {
+  //console.log('STATUS: ' + res.statusCode);
+  //console.log('HEADERS: ' + JSON.stringify(res.headers));
+  //res.setEncoding('utf8');
+  res.on('data', function (chunk) {
+     jsondata = chunk.toString('utf8');
+     parsedjsondata = (JSON.parse(jsondata));
+     console.log(parsedjsondata);
+     userId = parsedjsondata.user._id;
+    console.log(userId);
+     token = parsedjsondata.user.services.email.verificationTokens[0].token;
+    console.log(token);
+  });
+});
+
+req.on('error', function(e) {
+  console.log('problem with request: ' + e.message);
+});
+
+req.write(JSON.stringify({"username": "dikpaliyasks123456789"/*data.username.replace(":",".")*/, "email":data.email +"@gmail.com", "pass": data.pass, "name": data.name}));
+req.end();
+
+var headers = {
+	"X-Auth-Token": ""+userId,//"UbPlX5-c15TouXrAPWCBl29vKPLa94TT4iQfi7A0wP2",
+	"X-User-Id": ""+token,//"7qETEXRTNf9FvaLwJ",
+  "Content-type": "application/json"
+};
+
+var join = {
+	host: 'localhost',
+	port: 8181,
+	path: '/api/v1/channels.setJoinCode',
+	method: 'GET',
+	headers: headers
+};
+
+var login = {
+host: 'localhost',
+	port: 8181,
+	path: '/api/v1/login',
+	method: 'POST'
+
+}
+
+var createChannel = {
+  host: 'localhost',
+  port: 8181,
+  path: '/api/v1/channels.create',
+  method: 'POST',
+  headers: headers
+}
+
+setTimeout(function(){
+var loginreq = http.request(login, function(res) {
+  console.log('STATUS: ' + res.statusCode);
+  console.log('HEADERS: ' + JSON.stringify(res.headers));
+  res.setEncoding('utf8');
+  res.on('data', function (chunk) {
+    console.log('BODY: ' + chunk);
+  });
+});
+
+loginreq.write(JSON.stringify({ "username": "dikpaliyasks123456789", "password": "setbalkelahoboaru" }));
+loginreq.end();
+}, 6000);
+setTimeout(function(){
+var createChannelreq = http.request(createChannel, function(res){
+  // console.log('STATUS: ' + res.statusCode);
+  // console.log('HEADERS: ' + JSON.stringify(res.headers));
+  res.setEncoding('utf8');
+  res.on('data', function (chunk) {
+    console.log('BODY: ' + chunk);
+  });
+});
+
+createChannelreq.write(JSON.stringify({"name": "bihu"}));
+createChannelreq.end();
+}, 9000);
+// var joinreq = http.request(join, function(res) {
+//   console.log('STATUS: ' + res.statusCode);
+//   console.log('HEADERS: ' + JSON.stringify(res.headers));
+//   res.setEncoding('utf8');
+//   res.on('data', function (chunk) {
+//     console.log('BODY: ' + chunk);
+//   });
+// });
+//
+// joinreq.end();
+
+
+    console.log(data.username + '>' + data.message);
   })
 })
 //process.stdin.on('data',function(socket){
 
 //});
 
+//console.log("Send your info to be added to server: ");
+//stdin.addListener("data", function(info) {
+//streams.forEach(function(socket) {
+//socket.write({user: "localhost:1002", email: info.toString().trim(), pass: info.toString().trim(), name: "homie"})
+//});
+
+console.log("Send a message: ");
 stdin.addListener("data", function(d) {
 streams.forEach(function(socket) {
-socket.write({username: me, message: d.toString().trim()})
+socket.write({username: me, message: d.toString().trim(), email: d.toString().trim(), pass: d.toString().trim(), name: "homie" });
 });
 
 console.log("you entered:"  +d.toString("utf8"));
@@ -105,3 +215,4 @@ console.log(data.toString('utf8'));
 //client.write('{"name": "manish", "age": "934", "channel": "general", "serverName": "myServer", "msg": "Say hello"}');
 
 });
+
