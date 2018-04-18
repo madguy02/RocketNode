@@ -62,83 +62,67 @@ req.on('error', function(e) {
   console.log('problem with request: ' + e.message);
 });
 
-req.write(JSON.stringify({"username": "dikpaliyasks123456789"/*data.username.replace(":",".")*/, "email":data.email +"@gmail.com", "pass": data.pass, "name": data.name}));
+req.write(JSON.stringify({"username": "manish.localhost.3000"/*data.username.replace(":",".")*/, "email":data.email +"@gmail.com", "pass": data.pass, "name": data.name}));
 req.end();
 
-var headers = {
-	"X-Auth-Token": ""+userId,//"UbPlX5-c15TouXrAPWCBl29vKPLa94TT4iQfi7A0wP2",
-	"X-User-Id": ""+token,//"7qETEXRTNf9FvaLwJ",
-  "Content-type": "application/json"
-};
-
-var join = {
-	host: 'localhost',
-	port: 8181,
-	path: '/api/v1/channels.setJoinCode',
-	method: 'GET',
-	headers: headers
-};
 
 var login = {
 host: 'localhost',
 	port: 8181,
 	path: '/api/v1/login',
 	method: 'POST'
+};
 
-}
-
-var createChannel = {
-  host: 'localhost',
-  port: 8181,
-  path: '/api/v1/channels.create',
-  method: 'POST',
-  headers: headers
-}
-
-setTimeout(function(){
+var jsondata1;
+var parsedjsondata1;
+var userId1;
+var token1;
+setTimeout(function() {
 var loginreq = http.request(login, function(res) {
-  console.log('STATUS: ' + res.statusCode);
-  console.log('HEADERS: ' + JSON.stringify(res.headers));
-  res.setEncoding('utf8');
   res.on('data', function (chunk) {
-    console.log('BODY: ' + chunk);
+   jsondata1 = chunk.toString('utf8');
+  parsedjsondata1 = (JSON.parse(jsondata1));
+  console.log(parsedjsondata1);
+  userId1 = parsedjsondata1.data.userId;
+ //console.log(userId1);
+  token1 = parsedjsondata1.data.authToken;
+ //console.log(token1);
   });
 });
 
-loginreq.write(JSON.stringify({ "username": "dikpaliyasks123456789", "password": "setbalkelahoboaru" }));
+loginreq.write(JSON.stringify({ "username": "manish.localhost.3000", "password": "testing123" }));
 loginreq.end();
 }, 6000);
+
 setTimeout(function(){
-var createChannelreq = http.request(createChannel, function(res){
-  // console.log('STATUS: ' + res.statusCode);
-  // console.log('HEADERS: ' + JSON.stringify(res.headers));
+var newheaders = {
+  "X-Auth-Token": ""+token1,
+  "X-User-Id": ""+userId1,
+  "Content-type":"application/json"
+}
+console.log(newheaders);
+
+var sendMessage = {
+  host: 'localhost',
+  port: 8181,
+  path: '/api/v1/chat.postMessage',
+  method: 'POST',
+  headers: newheaders
+}
+
+var sendMessagereq = http.request(sendMessage, function(res){
   res.setEncoding('utf8');
   res.on('data', function (chunk) {
     console.log('BODY: ' + chunk);
   });
 });
 
-createChannelreq.write(JSON.stringify({"name": "bihu"}));
-createChannelreq.end();
+sendMessagereq.write(JSON.stringify({"channel": "#general", "text": "This is a test for federation!"}));
+sendMessagereq.end();
 }, 9000);
-// var joinreq = http.request(join, function(res) {
-//   console.log('STATUS: ' + res.statusCode);
-//   console.log('HEADERS: ' + JSON.stringify(res.headers));
-//   res.setEncoding('utf8');
-//   res.on('data', function (chunk) {
-//     console.log('BODY: ' + chunk);
-//   });
-// });
-//
-// joinreq.end();
-
-
     console.log(data.username + '>' + data.message);
   })
 })
-//process.stdin.on('data',function(socket){
-
-//});
 
 //console.log("Send your info to be added to server: ");
 //stdin.addListener("data", function(info) {
@@ -179,11 +163,7 @@ str += chunk;
 response.removeHeader('Content-Type');
 response.removeHeader('Host');
 response.removeHeader('Connection');
-//console.log(str);
-//the whole response has been recieved, so we just print it out here
-//response.on('end', function() {
-//console.log(str);
-//});
+
 };
 
 http.request(options, callback).write(bodyString);
@@ -208,10 +188,6 @@ http.request(options, callback).write(bodyString);
 
 client.on('data', function(data) {
 console.log(data.toString('utf8'));
-//console.log(JSON.parse(data).name);
-//console.log(JSON.parse(data).serverName);
-//console.log(JSON.parse(data).msg);
-
 //client.write('{"name": "manish", "age": "934", "channel": "general", "serverName": "myServer", "msg": "Say hello"}');
 
 });
