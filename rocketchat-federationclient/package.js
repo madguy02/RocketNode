@@ -16,11 +16,11 @@ Package.onUse(function(api) {
 
 	//Register v1 helpers
 	api.use('templating', 'client');
-	api.addFiles('federation.html', 'client');
-	api.addFiles('client.js','server');
-	api.addFiles('fedmsgserver.js','server');
-	api.addFiles('fedmsgclient.js','client');
-	api.addFiles('style.css','client');
+	api.addFiles('client/federation.html', 'client');
+	api.addFiles('server/client.js','server');
+	api.addFiles('client/fedmsgserver.js','server');
+	api.addFiles('client/fedmsgclient.js','client');
+	api.addFiles('client/style.css','client');
 	
 	
 });

@@ -1,0 +1,28 @@
+{
+  "name": "rocketnode",
+  "version": "0.1.0",
+  "description": "a federation module for RC",
+  "main": "rocketnode.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madguy02/RocketNode.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/madguy02/RocketNode/issues"
+  },
+  "homepage": "https://github.com/madguy02/RocketNode#readme",
+  "dependencies": {
+    "duplex-json-stream": "^1.0.1",
+    "express": "^4.16.3",
+    "fully-connected-topology": "^1.1.1",
+    "http": "0.0.0",
+    "net": "^1.0.2",
+    "request": "^2.85.0",
+    "stream-set": "^1.1.0"
+  }
+}

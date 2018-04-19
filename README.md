@@ -2,24 +2,26 @@
 
 This experimentation is being started keeping in mind to implement the federation capability of Rocket.Chat. Currently this is the very first stage of the project and the code is also written very crudely, with mostly static messages to be passed from Server to Server.
 
-The very name 'RocketNode' comes from the idea of having extra client nodes, which a user can set up to connect to the TCP server running within Rocket.Chat.
+The very name 'RocketNode' comes from the idea of having a federation node, which actually will be responsible for the federation of Rocket.Chat, apart from that we require to maintain a package within the RC server for a tcp connection that lets the rocketnode connect to the server.
 
 
 # Working
 
   - The server opens up a TCP port, acting as a package inside Rocket.Chat
-  - The client is then set up, which connects to the TCP port of the server.
-  - Lets say we have two instances (RC1 --> client1 &&  RC2  --> client2)
-  - Client1 forms a message and sends to RC2 instance, which RC2 writes down to a file (now locally) and the client2 (attached to RC2) reads the message and updates the client2 .
-  - Similarly , vice versa.
+  - The rocketnode is then run externally(as of now), which connects to the TCP port of the server.
+  - Lets say we have two instances (RC1 --> rocketnode1 &&  RC2  --> rocketnode2)
+  - The nodes although are connected to respective servers, also exists as Peer in a connection pool.
+  - The topology we implemented is a p2p(fully connected topology) .
+	- Further plan is to replace it with a mesh topology for better node discovery .
+
 
 
 ### Installation & Running
 
 ```sh
 $ meteor add rocketchat:federationclient (for instances trying to be federated)
-$ start rocketnode.js separately for servers(trying to federate)
-$ change the tcp port on the federationclient package and rocketnode.
+$ open up another terminal and ```node rocketnode.js localhost:port localhost:port ``` (the source and destination to be provided)
+.
 
 ```
 
@@ -38,23 +40,18 @@ $ change the tcp port on the federationclient package and rocketnode.
 
 ### Future Roadmap
 
-- [ ] Build a better Client.
-- [ ] The UI or the particular channel to which the message is intended has to be updated.
-- [ ] Replace the locally created logs with something more durable and fault tolerant (Looking at Kafka).
-- [ ] Add some UI to the Client.
-- [ ] Make the Server send the requests and route them properly (Ongoing Experiment).
-- [ ] Add Encryption, to avoid EavesDropping (TBD).
-- [ ] Moving with olm, implemented by matrix (TBD).
+- [ ] Set up rocketnode to do dns discovery for other nodes.
+- [ ] Implementation of Concensus to rocketnode and RC server.
+- [ ] Add Encryption, to avoid EavesDropping.
+- [ ] Moving with olm, implemented by matrix.
+- [ ] Improve code quality.
 
 
 
 ### Next immediate Step
 
-- [ ] Join a Room from Server1 to Server2
-- [ ] UI work on Rocket.Chat platform, for federation messages to display.
-- [x] Structuring of JSON messages.
-- [ ] RocketNode automatically query connected server information.
-- [ ] Implementation of Concensus to rocketnode and RC server.
+- [ ] Join a Room from Server1 to Server2 using rocketnode (partially achieved)
+- [ ] Figure out a DHT network.
 - [x] Implementation of a peer to peer network between rocketnodes.
 ### Instruction
 
@@ -65,9 +62,9 @@ other server to find that instance.
 ### Weaknesses
 
 - Leaky Buffers
-- Fault intolerant
-- Not Robust at all
-- The client depends on the connection to the server
+- Fault intolerant (fault tolerance is partly achieved)
+- Not Robust at all (Still under planning and discussion)
+- The client depends on the connection to the server (Fixed)
 
 ### Thoughts on ZeroMQ
 
