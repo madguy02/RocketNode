@@ -19,8 +19,11 @@ The very name 'RocketNode' comes from the idea of having a federation node, whic
 ### Installation & Running
 
 ```sh
-$ meteor add rocketchat:federationclient (for instances trying to be federated)
-$ open up another terminal and ```node rocketnode.js localhost:port localhost:port ``` (the source and destination to be provided)
+$ Run two instances of Rocket.Chat (meteor run --port 5001 && meteor run --port 8181
+$ meteor add rocketchat:federationclient (add to both thr instances)
+$ open up another terminal and ```node rocketnode.js localhost:4001 localhost:4002 && again node rocketnode.js localhost:4002 localhost:4001
+
+ ``` 
 .
 
 ```
