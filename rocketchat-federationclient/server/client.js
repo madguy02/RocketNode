@@ -11,6 +11,7 @@ var streamSet = require('stream-set');
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:3001/meteor";
 var stdin = process.openStdin();
+var circularJson = require("circular-json");
 
 var me = 'localhost:6000';
 var peers = 'localhost:3003';
@@ -33,7 +34,18 @@ var streams = streamSet();
 // });
 // }));
 
+MongoClient.connect(url, function(err,db){
+if(err) throw err;
+var dbo = db.db("meteor");
+var query= dbo.collection("rocketchat_message").find().sort({$natural:-1}).limit(1).toArray(function(err, result){
+	if (err) throw Error;
+	else {
+		console.log(result);
+	}
+	db.close();
+});
 
+}); // this is work in progess...
 
 
 // var t2 = topology('127.0.0.1:4002', ['127.0.0.1:4001', '127.0.0.1:4003']);
@@ -57,8 +69,9 @@ var val = data.toString('utf8').replace("PUT /channel/general HTTP/1.1","").repl
   	if (err) throw err;
   	var dbo = db.db("meteor");
   	var myobj = JSON.parse(val);
-	console.log(myobj);
-  	dbo.collection("rocketchat_federationmessage").insert(myobj, function(err, res) {
+	//console.log(myobj);
+	//dbo.collection("rocketchat_message").find().limit(1).sort({$natural:-1});
+  	dbo.collection("rocketchat_message").insert(myobj, function(err, res) {
     	if (err) throw err;
     	console.log("1 document inserted");
     	db.close();
@@ -119,7 +132,7 @@ req.on('error', function(e) {
   console.log('problem with request: ' + e.message);
 });
 
-req.write(JSON.stringify({"username": "testuser010.localhost.3000"/*data.username.replace(":",".")*/, "email":data.email +"@gmail.com", "pass": data.pass, "name": data.name}));
+req.write(JSON.stringify({"username": "testuser020.localhost.3000"/*data.username.replace(":",".")*/, "email":data.email +"@gmail.com", "pass": data.pass, "name": data.name}));
 req.end();
 
 
@@ -147,7 +160,7 @@ var loginreq = http.request(login, function(res) {
   });
 });
 
-loginreq.write(JSON.stringify({ "username": "testuser010.localhost.3000", "password": "natikudancu0123" }));
+loginreq.write(JSON.stringify({ "username": "testuser020.localhost.3000", "password": "goya" }));
 loginreq.end();
 }, 6000);
 
@@ -167,19 +180,62 @@ var sendMessage = {
   headers: newheaders
 }
 
+
+
 var sendMessagereq = http.request(sendMessage, function(res){
   res.setEncoding('utf8');
   res.on('data', function (chunk) {
-    console.log('BODY: ' + chunk);
+    console.log('BODY-this: ' + chunk);
   });
 });
 
+
+//console.log(getMessagereq);
+
+
 sendMessagereq.write(JSON.stringify({"channel": "#general", "text": "This is a test for federation!"}));
+
 sendMessagereq.end();
 }, 9000);
     console.log(data.username + '>' + data.message);
   })
 })
+
+
+	// var new1headers = {
+	// 	"X-Auth-Token": ""+token1,
+	// 	"X-User-Id": ""+userId1,
+	// 	"Content-type":"application/json"
+	// }
+	//console.log(new1headers);
+	
+	var getMessage = {
+		host: 'localhost',
+		port: 3000,
+		path: '/api/v1/chat.getMessage',
+		method: 'GET',
+		headers: newheaders
+	}
+	
+	// var getMessagereq = http.request(getMessage, function(res){
+	// 	res.setEncoding('utf8');
+	// 	res.on('data', function (chunk) {
+	// 		console.log('getmessage: ' + chunk);
+	// 	});
+	// });
+	//getMessagereq.end();
+	http.request(getMessage, function(err, res, body){
+		console.log("WORKING: "+body);
+	})
+
+//console.log(data.message);
+	
+	// sendMessagereq.write(JSON.stringify({"channel": "#general", "text": "This is a test for federation!"}));
+	// sendMessagereq.end();
+	// }, 9000);
+	// 		console.log(data.username + '>' + data.message);
+	// 	})
+	// })
 
 //console.log("Send your info to be added to server: ");
 //stdin.addListener("data", function(info) {
